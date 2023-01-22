@@ -5,7 +5,7 @@ import Header from "./Header";
 
 const App = () => {
     return (
-        <div>
+         <div>
             <Header />
             <Technologies />
         </div>
