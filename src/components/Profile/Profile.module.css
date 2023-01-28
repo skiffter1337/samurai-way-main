@@ -1,0 +1,10 @@
+.content img {
+    width: 20px;
+}
+
+.content {
+    background-color: aqua;
+    grid-area: content;
+
+}
+
