@@ -4,9 +4,9 @@ import Post from "./Post/Post";
 import {PostsDataType} from "../../../redux/state";
 
 
-
 type MyPostsPropsType = {
     postsState: PostsDataType[]
+    addPost: (postMessage: string) => void
 }
 
 
@@ -14,13 +14,16 @@ const MyPosts = (props: MyPostsPropsType) => {
 
     let newPostElement = React.createRef<HTMLTextAreaElement>();
 
-    const addPost = () => {
-        alert(newPostElement.current?.value)
+
+    const addPostCallback = () => {
+        if (newPostElement.current) {
+            props.addPost(newPostElement.current.value)
+        }
     }
 
 
-
-    let postsElement = props.postsState.map(post => <Post key={post.id} message={post.message} likesCount={post.likesCount}/>)
+    let postsElement = props.postsState.map(post => <Post key={post.id} message={post.message}
+                                                          likesCount={post.likesCount}/>)
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
@@ -29,7 +32,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                     <textarea ref={newPostElement} className={s.textarea} placeholder="What's new?"></textarea>
                 </div>
                 <div>
-                    <button onClick={addPost} type="submit">add post</button>
+                    <button onClick={addPostCallback} type="submit">add post</button>
                 </div>
                 <div className={s.posts}>
                     {postsElement}

@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 
 
+
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
@@ -39,10 +40,8 @@ export let state: StateType = {
         posts: [
             {id: v1(), message: "Hello, how are you?", likesCount: 10},
             {id: v1(), message: "It's my first post!", likesCount: 20},
-            {id: v1(), message: "It's my first post!", likesCount: 20},
-            {id: v1(), message: "It's my first post!", likesCount: 20},
-            {id: v1(), message: "It's my first post!", likesCount: 20},
             {id: v1(), message: "It's my first post!", likesCount: 20}
+
         ],
     },
     dialogsPage: {
@@ -70,4 +69,11 @@ export let state: StateType = {
             {name: "Ilya"}
         ]
     }
+}
+
+export const addPost = (postMessage: string) => {
+
+    const newPost: PostsDataType = {id: v1(), message: postMessage, likesCount: 0}
+    state.profilePage.posts.unshift(newPost)
+
 }
