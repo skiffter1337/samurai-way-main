@@ -4,6 +4,14 @@ import {v1} from "uuid";
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    sidebar: SidebarType
+}
+export type SidebarType = {
+    sidebarData: SidebarDataType[]
+}
+
+export type SidebarDataType = {
+    name: string
 }
 export type ProfilePageType = {
     posts: PostsDataType[]
@@ -53,6 +61,13 @@ export let state: StateType = {
             {id: v1(), message: "Yo"},
             {id: v1(), message: "Hi"},
             {id: v1(), message: "Bye"}
+        ]
+    },
+    sidebar: {
+        sidebarData: [
+            {name: "Egor"},
+            {name: "Pavel"},
+            {name: "Ilya"}
         ]
     }
 }

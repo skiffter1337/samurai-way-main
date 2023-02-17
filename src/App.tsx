@@ -9,8 +9,7 @@ import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {StateType} from "./redux/state";
-
-
+import {Friends} from "./components/Friends/Friends";
 
 type AppType = {
     state: StateType
@@ -21,7 +20,7 @@ const App = (props: AppType) => {
     return (
         <div className="app-wrapper">
             <Header/>
-            <Navbar/>
+            <Navbar state={props.state.sidebar}/>
             <div className="app-wrapper-content">
                 <Routes>
                     <Route path="/dialogs" element={<Dialogs state={props.state.dialogsPage}/>}/>
@@ -29,6 +28,7 @@ const App = (props: AppType) => {
                     <Route path="/news" element={News}/>
                     <Route path="/music" element={Music}/>
                     <Route path="/settings" element={Settings}/>
+                    <Route path="/friends" element={<Friends/>}/>
                 </Routes>
             </div>
         </div>

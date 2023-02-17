@@ -13,3 +13,19 @@
 .item .active {
  color: gold;
 }
+
+.friends {
+    font-size: 25px;
+    margin-top: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+
+.friends .active {
+    color: gold;
+}
+.friendsList {
+    font-size: 10px;
+    padding-left: 5px;
+}
