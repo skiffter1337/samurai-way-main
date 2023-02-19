@@ -14,6 +14,7 @@ import {Friends} from "./components/Friends/Friends";
 type AppType = {
     state: StateType
     addPost: (postMessage: string)=>void
+    addMessage: (newMessage: string)=>void
 
 }
 
@@ -24,7 +25,7 @@ const App = (props: AppType) => {
             <Navbar state={props.state.sidebar}/>
             <div className="app-wrapper-content">
                 <Routes>
-                    <Route path="/dialogs" element={<Dialogs state={props.state.dialogsPage}/>}/>
+                    <Route path="/dialogs" element={<Dialogs addMessage={props.addMessage} state={props.state.dialogsPage}/>}/>
                     <Route path="/profile" element={<Profile addPost={props.addPost} state={props.state.profilePage}/>}/>
                     <Route path="/news" element={News}/>
                     <Route path="/music" element={Music}/>

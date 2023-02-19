@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {PostsDataType} from "../../../redux/state";
@@ -12,13 +12,16 @@ type MyPostsPropsType = {
 
 const MyPosts = (props: MyPostsPropsType) => {
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
+    const [addPostTitle, setAddPostTitle] = useState("")
+
+    const onChangeAddPost = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        setAddPostTitle(event.currentTarget.value)
+    }
 
 
     const addPostCallback = () => {
-        if (newPostElement.current) {
-            props.addPost(newPostElement.current.value)
-        }
+        props.addPost(addPostTitle)
+        setAddPostTitle("")
     }
 
 
@@ -29,7 +32,8 @@ const MyPosts = (props: MyPostsPropsType) => {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement} className={s.textarea} placeholder="What's new?"></textarea>
+                    <textarea value={addPostTitle} onChange={onChangeAddPost} className={s.textarea}
+                              placeholder="What's new?"></textarea>
                 </div>
                 <div>
                     <button onClick={addPostCallback} type="submit">add post</button>

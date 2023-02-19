@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
 
 
@@ -75,5 +76,11 @@ export const addPost = (postMessage: string) => {
 
     const newPost: PostsDataType = {id: v1(), message: postMessage, likesCount: 0}
     state.profilePage.posts.unshift(newPost)
+    rerenderEntireTree(state)
 
+}
+
+export const addMessage = (newMessage: string) => {
+    const message: MessageType = {id: v1(), message: newMessage}
+    state.dialogsPage.messages.push(message)
 }
