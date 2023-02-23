@@ -1,42 +1,48 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {PostsDataType} from "../../../redux/state";
 
 
 type MyPostsPropsType = {
-    postsState: PostsDataType[]
+    posts: PostsDataType[]
     addPost: (postMessage: string) => void
+    newPostText: string
+    updateNewPostText: (newText: string)=>void
 }
 
 
 const MyPosts = (props: MyPostsPropsType) => {
+    let postsElement = props.posts.map(post => <Post key={post.id} message={post.message} likesCount={post.likesCount}/>)
 
-    const [addPostTitle, setAddPostTitle] = useState("")
+    // const [addPostTitle, setAddPostTitle] = useState("")
 
-    const onChangeAddPost = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setAddPostTitle(event.currentTarget.value)
+
+
+    const addPost = () => {
+        props.addPost(props.newPostText)
+
+    }
+
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let newText = e.currentTarget.value;
+        props.updateNewPostText(newText)
     }
 
 
-    const addPostCallback = () => {
-        props.addPost(addPostTitle)
-        setAddPostTitle("")
-    }
 
 
-    let postsElement = props.postsState.map(post => <Post key={post.id} message={post.message}
-                                                          likesCount={post.likesCount}/>)
+
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea value={addPostTitle} onChange={onChangeAddPost} className={s.textarea}
-                              placeholder="What's new?"></textarea>
+                    <textarea value={props.newPostText} onChange={onPostChange}  className={s.textarea}
+                              placeholder="What's new?"/>
                 </div>
                 <div>
-                    <button onClick={addPostCallback} type="submit">add post</button>
+                    <button onClick={addPost} type="submit">add post</button>
                 </div>
                 <div className={s.posts}>
                     {postsElement}
