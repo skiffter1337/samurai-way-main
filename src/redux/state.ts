@@ -1,5 +1,6 @@
 import {v1} from "uuid";
 
+
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
@@ -34,15 +35,6 @@ export type MessageType = {
     message: string
 }
 
-export type StoreType = {
-    _state: StateType
-    _callSubscriber: (state: StateType) => void
-    getState: () => StateType
-    subscribe: (observer: (state: StateType) => void) => void
-
-    dispatch: (action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType) => void
-}
-
 export type AddPostActionType = {
     type: "ADD-POST"
 }
@@ -50,6 +42,7 @@ export type UpdateNewPostTextActionType = {
     type: "UPDATE-NEW-POST-TEXT"
     newText: string
 }
+
 export type AddMessageActionType = {
     type: "ADD-MESSAGE"
 }
@@ -57,6 +50,19 @@ export type UpdateNewMessageTextActionType = {
     type: "UPDATE-NEW-MESSAGE-TEXT"
     newMessage: string
 }
+
+export type StoreType = {
+    _state: StateType
+    _callSubscriber: (state: StateType) => void
+    getState: () => StateType
+    subscribe: (observer: (state: StateType) => void) => void
+    dispatch: (action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType) => void
+}
+
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_MESSAGE = "ADD-MESSAGE";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 
 let store: StoreType = {
     _state: {
@@ -129,6 +135,21 @@ let store: StoreType = {
         }
     }
 }
+
+
+
+export const addPostAC = ():AddPostActionType => ({type: ADD_POST})
+export const updateNewPostTextAC = (newText: string): UpdateNewPostTextActionType => {
+    return {type: UPDATE_NEW_POST_TEXT, newText: newText}
+}
+
+export const addMessageAC = ():AddMessageActionType  => ({type: ADD_MESSAGE})
+export const updateNewMessageTextAC = (newMessage: string):UpdateNewMessageTextActionType => {
+    return {type: UPDATE_NEW_MESSAGE_TEXT, newMessage: newMessage}
+}
+
+
+
 
 
 export default store
