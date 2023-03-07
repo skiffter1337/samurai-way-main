@@ -16,6 +16,7 @@ import {
     UpdateNewPostTextActionType
 } from "./redux/state";
 import {Friends} from "./components/Friends/Friends";
+import {Error404} from "./components/Error404/Error404";
 
 type AppType = {
     state: StateType
@@ -43,6 +44,7 @@ const App = (props: AppType) => {
                     <Route path="/music" element={Music}/>
                     <Route path="/settings" element={Settings}/>
                     <Route path="/friends" element={<Friends/>}/>
+                    <Route path="/*" element={<Error404/>}/>
                 </Routes>
             </div>
         </div>

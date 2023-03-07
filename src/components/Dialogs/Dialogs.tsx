@@ -23,14 +23,15 @@ export const Dialogs = (props: DialogsPropsType) => {
             </div>
         )
     })
-    let messagesElement = props.dialogsPage.messages.map(message => <Message key={message.id} message={message.message} id={message.id}/>)
+    let messagesElement = props.dialogsPage.messages.map(message => <Message key={message.id} message={message.message}
+                                                                             id={message.id}/>)
+    let newMessageText = props.dialogsPage.newMessageText
 
-
-    const addNewMessage = () => {
+    const onClickAddNewMessage = () => {
         props.dispatch(addMessageAC())
     }
 
-    const onChangeUpdateNewMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeUpdateNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newMessage = e.currentTarget.value
         props.dispatch(updateNewMessageTextAC(newMessage))
     }
@@ -42,10 +43,13 @@ export const Dialogs = (props: DialogsPropsType) => {
                 {dialogsElement}
             </div>
             <div className={s.dialogsMessages}>
-                {messagesElement}
-                <textarea value={props.dialogsPage.newMessageText} onChange={onChangeUpdateNewMessageHandler}
-                          placeholder={"new message"}></textarea>
-                <button onClick={addNewMessage}>send</button>
+                <div> {messagesElement} </div>
+                <div>
+                <textarea value={newMessageText} onChange={onChangeUpdateNewMessage}
+                          placeholder={"new message"}></textarea></div>
+                <div>
+                    <button onClick={onClickAddNewMessage}>send</button>
+                </div>
             </div>
         </div>
     );
