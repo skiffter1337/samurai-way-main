@@ -1,32 +1,30 @@
 import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {
-    AddPostActionType,
-    PostsDataType,
-    UpdateNewPostTextActionType
-} from "../../../redux/store";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/ProfileReducer";
+import {  PostsDataType} from "../../../redux/store";
+
 
 type MyPostsPropsType = {
     posts: PostsDataType[]
     newPostText: string
-    dispatch: (action: AddPostActionType | UpdateNewPostTextActionType) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
-const MyPosts = (props: MyPostsPropsType) => {
-    let postsElement = props.posts.map(post => <Post key={post.id} message={post.message} likesCount={post.likesCount}/>)
+export const MyPosts = (props: MyPostsPropsType) => {
+    let postsElement = props.posts.map(post =>
+        <Post
+            key={post.id}
+            message={post.message}
+            likesCount={post.likesCount}
+        />)
 
 
-
-    const addPost = () => {
-        props.dispatch(addPostAC())
-
-    }
+    const addPost = () => props.addPost()
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value;
-        props.dispatch(updateNewPostTextAC(newText))
+        props.updateNewPostText(newText)
     }
 
     return (
@@ -51,4 +49,3 @@ const MyPosts = (props: MyPostsPropsType) => {
     )
 }
 
-export default MyPosts;
