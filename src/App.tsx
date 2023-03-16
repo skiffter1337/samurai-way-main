@@ -14,7 +14,7 @@ import {
     StateType,
     UpdateNewMessageTextActionType,
     UpdateNewPostTextActionType
-} from "./redux/state";
+} from "./redux/store";
 import {Friends} from "./components/Friends/Friends";
 import {Error404} from "./components/Error404/Error404";
 

@@ -1,15 +1,15 @@
 import React from "react";
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
-import {SidebarType} from "../../redux/state";
+import {SidebarType} from "../../redux/store";
 
 type NavbarType = {
 state: SidebarType
 }
 
 export const Navbar = (props: NavbarType) => {
-    const fiendsList = props.state.sidebarData.map(friend => {
-        return <span>{friend.name + " "}</span>
+    const fiendsList = props.state.sidebarData.map((friend, index) => {
+        return <span key={index}>{friend.name + " "}</span>
     })
 
 

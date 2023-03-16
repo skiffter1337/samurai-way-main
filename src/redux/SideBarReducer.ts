@@ -3,10 +3,19 @@ import {
     AddPostActionType, SidebarType,
     UpdateNewMessageTextActionType,
     UpdateNewPostTextActionType
-} from "./state";
+} from "./store";
 
 
-const sideBarReducer = (state: SidebarType, action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType) => {
+let initialState: SidebarType = {
+    sidebarData: [
+        {name: "Egor"},
+        {name: "Pavel"},
+        {name: "Ilya"}
+    ]
+}
+
+
+const sideBarReducer = (state = initialState, action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType): SidebarType => {
      if(action) {
 
      }
