@@ -19,9 +19,10 @@ export type StoreType = {
     dispatch: (action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType) => void
 }
 
+
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sideBarReducer
 })
-export let store: StoreType = createStore(reducers)
+export let store = createStore(reducers)
