@@ -10,6 +10,7 @@ import {Settings} from "./components/Settings/Settings";
 import {Friends} from "./components/Friends/Friends";
 import {Error404} from "./components/Error404/Error404";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 
 
@@ -22,6 +23,7 @@ const App = () => {
                 <Routes>
                     <Route path="/dialogs" element={<DialogsContainer/>}/>
                     <Route path="/profile" element={<Profile/>}/>
+                    <Route path="/users" element={<UsersContainer/>}/>
                     <Route path="/news" element={News}/>
                     <Route path="/music" element={Music}/>
                     <Route path="/settings" element={Settings}/>

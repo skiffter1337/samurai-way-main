@@ -1,11 +1,13 @@
 
 import {DialogsPageType} from "./DialogsReducer";
+import {UsersType} from "./UsersReducer";
 
 
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SidebarType
+    usersPage: UsersType
 }
 export type SidebarType = {
     sidebarData: SidebarDataType[]
