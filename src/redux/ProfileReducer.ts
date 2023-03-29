@@ -23,7 +23,7 @@ let  initialState: ProfilePageType =  {
         newPostText: ""
 }
 
-const profileReducer = (state = initialState, action: AddPostActionType | UpdateNewPostTextActionType | AddMessageActionType | UpdateNewMessageTextActionType): ProfilePageType => {
+export const profileReducer = (state = initialState, action: AddPostActionType | UpdateNewPostTextActionType | AddMessageActionType | UpdateNewMessageTextActionType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PostsDataType = {
@@ -43,6 +43,3 @@ export const addPostAC = ():AddPostActionType => ({type: ADD_POST})
 export const updateNewPostTextAC = (newText: string): UpdateNewPostTextActionType => {
     return {type: UPDATE_NEW_POST_TEXT, newText: newText}
 }
-
-
-export default profileReducer;
