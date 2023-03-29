@@ -10,11 +10,13 @@ import axios from "axios";
 
 
 export const Users = (props: UsersPropsType) => {
-    if(props.usersPage.length === 0) {
+    const getUsers = () => {
+        if(props.usersPage.length === 0) {
+            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+                props.setUsers(response.data.items)
+            })
+    }
 
-    axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-        props.setUsers(response.data.items)
-    })
 
 
     }
@@ -43,6 +45,7 @@ export const Users = (props: UsersPropsType) => {
 
     return (
         <div>
+            <button onClick={getUsers}>Get users</button>
             {mappedUsers}
         </div>
     );
