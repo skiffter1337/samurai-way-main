@@ -2,14 +2,14 @@
 
 export type UsersType = {
     items:      UserType[];
-    totalCount: number;
-    error:      null;
+    // totalCount: number;
+    // error:      null;
 }
 
 export type UserType = {
     name:          string;
     id:            number;
-    uniqueUrlName: null;
+    // uniqueUrlName: null;
     photos:        PhotosType;
     status:        null;
     followed:      boolean;
@@ -20,17 +20,15 @@ export type PhotosType = {
     large: null;
 }
 
+type InitialStateType = typeof initialState
 
-
-let initialState: UsersType = {
-    items: [
-
-    ] as UserType[],
-    totalCount: 23567,
-    error: null
+let initialState = {
+    items: [] as UserType[]
+    // totalCount: 23567,
+    // error: null
 }
 
-export const usersReducer = (state: UsersType = initialState, action: ActionType): UsersType => {
+export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case "FOLLOW": {
             return {...state, items: state.items.map(u => u.id === action.payload.id? {...u, followed: true} : u)}
