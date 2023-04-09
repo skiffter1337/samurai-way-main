@@ -10,7 +10,7 @@ import {Settings} from "./components/Settings/Settings";
 import {Friends} from "./components/Friends/Friends";
 import {Error404} from "./components/Error404/Error404";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {UsersContainer} from "./components/Users/UsersContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 
 

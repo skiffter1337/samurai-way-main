@@ -1,61 +1,54 @@
 import React from 'react';
-import s from './Users.module.css'
-import userPhoto from '../../assets/images/profile-anonymous2.png'
+import userPhoto from "../../assets/images/profile-anonymous2.png";
+import s from "./Users.module.css";
+import {UserType} from "../../redux/UsersReducer";
 
 
-import {UsersPropsType} from "./UsersContainer";
-import axios from "axios";
+type UsersType = {
+    totalCount: number
+    currentPage: number
+    usersPage: UserType[]
+    pageSize: number
 
 
-export class Users extends React.Component<UsersPropsType> {
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
-            this.props.setUsers(response.data.items)
-            this.props.setTotalUsersCount(response.data.totalCount)
-        })
+    changeCurrentPage: (page: number) => void
+    follow: (id: number) => void
+    unfollow: (id: number) => void
+}
 
+
+export const Users = (props: UsersType) => {
+
+    const pagesCount = Math.ceil(props.totalCount / props.pageSize / 100)
+
+    const pages = []
+
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
 
-    render() {
+    return (
+        <>
+            {pages.map(p => {
 
-        const pagesCount = Math.ceil( this.props.totalCount / this.props.pageSize)
+                return (
+                    <span className={p === props.currentPage ? s.selected_page : ""}
+                          onClick={() => props.changeCurrentPage(p)}>{` ${p} `}</span>
+                )
+            })}
+            {
+                props.usersPage.map(u => {
+                    const followHandler = () => props.follow(u.id)
+                    const unfollowHandler = () => props.unfollow(u.id)
 
-        const pages = []
-
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i)
-        }
-
-
-        const mappedPages = pages.map(p => {
-            const changeCurrentPageHandler = () => {
-                this.props.changeCurrentPage(p)
-                axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`).then(response => {
-                    this.props.setUsers(response.data.items)
-                })
-            }
-
-            return (
-                <span className={p === this.props.currentPage ? s.selected_page : ""} onClick={changeCurrentPageHandler}>{` ${p} `}</span>
-            )
-        })
-
-        return (
-            <>
-                {mappedPages}
-                {
-                    this.props.usersPage.map(u => {
-                        const followHandler = () => this.props.follow(u.id)
-                        const unfollowHandler = () => this.props.unfollow(u.id)
-
-                        return (
-                            <div key={u.id}>
+                    return (
+                        <div key={u.id}>
                         <span>
                             <div><img src={u.photos.small !== null ? u.photos.small : userPhoto} className={s.userPic}/></div>
                             <div>{!u.followed ? <button onClick={followHandler}>Follow</button> :
                                 <button onClick={unfollowHandler}>Unfollow</button>}</div>
                         </span>
-                                <span>
+                            <span>
                             <span>
                                 <div>{u.name}</div>
                                 <div>{u.status}</div>
@@ -65,23 +58,10 @@ export class Users extends React.Component<UsersPropsType> {
                                 <div>{"u.location.city"}</div>
                             </span>
                         </span>
-                            </div>
-                        )
-                    })}
-            </>
-        )
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
+                        </div>
+                    )
+                })}
+        </>
+    )
+};
 
