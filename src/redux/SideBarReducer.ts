@@ -1,10 +1,10 @@
-import {
-    AddMessageActionType,
-    AddPostActionType, SidebarType,
-    UpdateNewMessageTextActionType,
-    UpdateNewPostTextActionType
-} from "./store";
 
+export type SidebarType = {
+    sidebarData: SidebarDataType[]
+}
+export type SidebarDataType = {
+    name: string
+}
 
 let initialState: SidebarType = {
     sidebarData: [
@@ -15,7 +15,7 @@ let initialState: SidebarType = {
 }
 
 
-const sideBarReducer = (state = initialState, action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType): SidebarType => {
+const sideBarReducer = (state = initialState, action: any): SidebarType => {
      if(action) {
 
      }

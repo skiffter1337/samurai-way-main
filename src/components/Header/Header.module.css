@@ -8,4 +8,5 @@
 .header {
     background-color: #6A6262;
     grid-area: header;
+    height: 30vh;
 }

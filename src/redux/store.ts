@@ -1,54 +1,45 @@
 
 import {DialogsPageType} from "./DialogsReducer";
 import {UsersType} from "./UsersReducer";
+// import {AddPostActionType, UpdateNewPostTextActionType} from "./ProfileReducer";
 
 
-export type StateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-    sidebar: SidebarType
-    usersPage: UsersType
-}
-export type SidebarType = {
-    sidebarData: SidebarDataType[]
-}
-export type SidebarDataType = {
-    name: string
-}
-export type ProfilePageType = {
-    posts: PostsDataType[]
-    newPostText: string
-}
+// export type StateType = {
+//     profilePage: ProfilePageType
+//     dialogsPage: DialogsPageType
+//     sidebar: SidebarType
+//     usersPage: UsersType
+// }
 
-export type PostsDataType = {
-    id: string
-    message: string
-    likesCount: number
-}
 
-export type AddPostActionType = {
-    type: "ADD-POST"
-}
-export type UpdateNewPostTextActionType = {
-    type: "UPDATE-NEW-POST-TEXT"
-    newText: string
-}
+// export type ProfilePageType = {
+//     posts: PostsDataType[]
+//     newPostText: string
+// }
+//
+// export type PostsDataType = {
+//     id: string
+//     message: string
+//     likesCount: number
+// }
 
-export type AddMessageActionType = {
-    type: "ADD-MESSAGE"
-}
-export type UpdateNewMessageTextActionType = {
-    type: "UPDATE-NEW-MESSAGE-TEXT"
-    newMessage: string
-}
 
-export type StoreType = {
-    _state: any
-    _callSubscriber: (state: StateType) => void
-    getState: () => StateType
-    subscribe: (observer: (state: StateType) => void) => void
-    dispatch: (action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType) => void
-}
+
+// export type AddMessageActionType = {
+//     type: "ADD-MESSAGE"
+// }
+// export type UpdateNewMessageTextActionType = {
+//     type: "UPDATE-NEW-MESSAGE-TEXT"
+//     newMessage: string
+// }
+
+// export type StoreType = {
+//     _state: any
+//     _callSubscriber: (state: StateType) => void
+//     getState: () => StateType
+//     subscribe: (observer: (state: StateType) => void) => void
+//     dispatch: (action: AddPostActionType | UpdateNewPostTextActionType |  AddMessageActionType | UpdateNewMessageTextActionType) => void
+// }
 
 //
 // let store: StoreType = {
