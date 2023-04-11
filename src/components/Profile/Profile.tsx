@@ -14,7 +14,7 @@ const Profile = (props: ProfileComponentType) => {
     console.log(props.profile.photos)
     return (
         <div>
-            <ProfileInfo photos={props.profile.photos}/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     );
