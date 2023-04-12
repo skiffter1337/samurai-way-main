@@ -1,7 +1,7 @@
 import React from "react";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {addPost, ProfileActionsType, updateNewPostText} from "../../../redux/ProfileReducer";
+import {addPost, ProfileActionsType, updateNewPostText} from "../../../redux/reducers/ProfileReducer";
 import {AppStoreType} from "../../../redux/redux-store";
 
 let mapStateToProps = (state: AppStoreType) => {

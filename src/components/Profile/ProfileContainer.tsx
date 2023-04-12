@@ -6,7 +6,7 @@ import {AppStoreType} from "../../redux/redux-store";
 import {
     ProfileType,
     setUserProfile,
-} from "../../redux/ProfileReducer";
+} from "../../redux/reducers/ProfileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
 

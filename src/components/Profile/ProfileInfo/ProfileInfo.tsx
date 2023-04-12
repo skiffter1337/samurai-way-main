@@ -1,6 +1,6 @@
 import React from 'react';
 import s from "../Profile.module.css";
-import {ProfileType} from "../../../redux/ProfileReducer";
+import {ProfileType} from "../../../redux/reducers/ProfileReducer";
 import profilePic from './../../../assets/images/profile-anonymous2.png'
 import {Preloader} from "../../common/Preloader/Preloader";
 

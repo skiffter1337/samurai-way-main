@@ -1,12 +1,24 @@
 .header img {
-    padding-left: 30px;
-    padding-top: 30px;
-    width: 120px;
-    max-width: 120px;
+width: 200px;
+    height: 50px;
+
+
 }
 
 .header {
+
     background-color: #6A6262;
     grid-area: header;
     height: 30vh;
+}
+
+.headerBlock {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.loginBlock a {
+    color:  white;
 }

@@ -1,6 +1,6 @@
 
-import {DialogsPageType} from "./DialogsReducer";
-import {UsersType} from "./UsersReducer";
+import {DialogsPageType} from "./reducers/DialogsReducer";
+import {UsersType} from "./reducers/UsersReducer";
 // import {AddPostActionType, UpdateNewPostTextActionType} from "./ProfileReducer";
 
 

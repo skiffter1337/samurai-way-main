@@ -7,7 +7,7 @@ import {
     setUsers, toggleIsFetching,
     unfollow,
     UserType
-} from "../../redux/UsersReducer";
+} from "../../redux/reducers/UsersReducer";
 import {AppStoreType} from '../../redux/redux-store';
 import axios from 'axios';
 import {Users} from './Users';
