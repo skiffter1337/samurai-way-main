@@ -2,8 +2,9 @@ import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
 import {AppStoreType} from "../../redux/redux-store";
-import axios from "axios";
 import {setUserAuthData, UserDataType} from "../../redux/reducers/authReducer";
+import {userAPI} from "../../api/api";
+
 
 
 type MapDispatchToPropsType = {
@@ -20,13 +21,14 @@ type HeaderContainerType = MapDispatchToPropsType & MapStateToPropsType
 class HeaderContainer extends React.Component<HeaderContainerType> {
 
     componentDidMount() {
-        axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {withCredentials: true})
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    this.props.setUserAuthData(response.data.data)
+        userAPI.getUserAuthData()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    this.props.setUserAuthData(data.data)
                 }
             })
     }
+
 
     render() {
         return (

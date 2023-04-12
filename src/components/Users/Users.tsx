@@ -3,6 +3,7 @@ import userPhoto from "../../assets/images/profile-anonymous2.png";
 import s from "./Users.module.css";
 import {UserType} from "../../redux/reducers/UsersReducer";
 import {NavLink} from "react-router-dom";
+import {userAPI} from "../../api/api";
 
 
 type UsersType = {
@@ -10,7 +11,6 @@ type UsersType = {
     currentPage: number
     usersPage: UserType[]
     pageSize: number
-
 
     changeCurrentPage: (page: number) => void
     follow: (id: number) => void
@@ -39,18 +39,35 @@ export const Users = (props: UsersType) => {
             })}
             {
                 props.usersPage.map(u => {
-                    const followHandler = () => props.follow(u.id)
-                    const unfollowHandler = () => props.unfollow(u.id)
+                    const followHandler = () => {
+                        userAPI.follow(u.id)
+                            .then(data => {
+                                if (data.resultCode === 0) {
+                                    props.follow(u.id)
+                                }
+                            })
+                    }
+                    const unfollowHandler = () => {
+                        userAPI.unFollow(u.id)
+                            .then(data => {
+                                if (data.resultCode === 0) {
+                                    props.unfollow(u.id)
+                                }
+                            })
+                    }
 
                     return (
                         <div key={u.id}>
                         <span>
                             <div>
-                              <NavLink to={"/profile/" + u.id}><img src={u.photos.small !== null ? u.photos.small : userPhoto} className={s.userPic}/></NavLink>
+                              <NavLink to={"/profile/" + u.id}><img
+                                  src={u.photos.small !== null ? u.photos.small : userPhoto}
+                                  className={s.userPic}/></NavLink>
                             </div>
-
-                            <div>{!u.followed ? <button onClick={followHandler}>Follow</button> :
-                                <button onClick={unfollowHandler}>Unfollow</button>}</div>
+                            <div>{!u.followed
+                                ? <button onClick={followHandler}>Follow</button>
+                                : <button onClick={unfollowHandler}>Unfollow</button>}
+                            </div>
                         </span>
                             <span>
                             <span>
