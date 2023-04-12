@@ -14,7 +14,7 @@ export type DialogsPropsType = {
 export const Dialogs = (props: DialogsPropsType) => {
     let dialogsElement = props.dialogsPage.dialogs.map(dialog => {
         return (
-            <div className={s.friends}>
+            <div className={s.friends} key={dialog.id}>
                 <img className={s.img} src="https://cdn.onlinewebfonts.com/svg/img_266351.png"/>
                 <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>
             </div>

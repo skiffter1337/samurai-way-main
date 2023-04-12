@@ -11,7 +11,6 @@ type ProfileComponentType = {
 
 
 const Profile = (props: ProfileComponentType) => {
-    console.log(props.profile.photos)
     return (
         <div>
             <ProfileInfo profile={props.profile}/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import s from "../Profile.module.css";
-import {ProfilePhotosType, ProfileType} from "../../../redux/ProfileReducer";
+import {ProfileType} from "../../../redux/ProfileReducer";
 import profilePic from './../../../assets/images/profile-anonymous2.png'
 import {Preloader} from "../../common/Preloader/Preloader";
 
@@ -9,7 +9,7 @@ type ProfileInfoComponentType = {
 }
 export const ProfileInfo = (props: ProfileInfoComponentType) => {
 
-    console.log(props.profile.photos)
+
     if (!props.profile.photos) {
         return <Preloader/>
     }
