@@ -1,24 +1,23 @@
-
-
 export type UsersType = {
-    items:      UserType[];
+    items: UserType[];
     // totalCount: number;
     // error:      null;
 }
 
 export type UserType = {
-    name:          string;
-    id:            number;
+    name: string;
+    id: number;
     // uniqueUrlName: null;
-    photos:        PhotosType;
-    status:        null;
-    followed:      boolean;
+    photos: PhotosType;
+    status: null;
+    followed: boolean;
 }
 
 export type PhotosType = {
     small: null;
     large: null;
 }
+
 
 type InitialStateType = typeof initialState
 
@@ -27,7 +26,8 @@ let initialState = {
     pageSize: 5,
     totalCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: [0]
     // error: null
 }
 
@@ -35,7 +35,7 @@ let initialState = {
 export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case "FOLLOW": {
-            return {...state, items: state.items.map(u => u.id === action.payload.id? {...u, followed: true} : u)}
+            return {...state, items: state.items.map(u => u.id === action.payload.id ? {...u, followed: true} : u)}
         }
         case "UNFOLLOW": {
             return {...state, items: state.items.map(u => u.id === action.payload.id ? {...u, followed: false} : u)}
@@ -50,13 +50,24 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
             return {...state, totalCount: action.payload.totalCount}
         }
         case "TOGGLE-IS-FETCHING": {
-            return  {...state, isFetching: action.payload.isFetching}
+            return {...state, isFetching: action.payload.isFetching}
         }
-        default: return state
+        case "TOGGLE-FOLLOWING-PROGRESS": {
+            return {...state, followingInProgress: action.payload.isFetching ? [...state.followingInProgress, action.payload.id] :
+                    state.followingInProgress.filter(id => id !== action.payload.id)}
+        }
+        default:
+            return state
     }
 }
 
-type ActionType = FollowACType | UnfollowACType | SetUsersACType | ChangeCurrentPageACType | SetTotalUsersCountACType | ToggleIsFetchingACType
+type ActionType = FollowACType
+    | UnfollowACType |
+    SetUsersACType |
+    ChangeCurrentPageACType |
+    SetTotalUsersCountACType |
+    ToggleIsFetchingACType |
+    ToggleFollowingProgressType
 
 type FollowACType = ReturnType<typeof follow>
 
@@ -115,6 +126,16 @@ export const toggleIsFetching = (flag: boolean) => {
         type: "TOGGLE-IS-FETCHING",
         payload: {
             isFetching: flag
+        }
+    } as const
+}
+type ToggleFollowingProgressType = ReturnType<typeof toggleFollowingProgress>
+export const toggleFollowingProgress = (isFetching: boolean, id: number) => {
+    return {
+        type: "TOGGLE-FOLLOWING-PROGRESS",
+        payload: {
+            isFetching: isFetching,
+            id: id
         }
     } as const
 }
