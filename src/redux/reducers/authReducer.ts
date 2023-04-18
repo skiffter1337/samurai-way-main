@@ -1,3 +1,5 @@
+import {userAPI} from "../../api/api";
+import {Dispatch} from "redux";
 
 export type UserDataType = {
     id: number | null
@@ -43,4 +45,15 @@ export const setUserAuthData = (data: UserDataType) => {
         data
 
     } as const
+}
+
+export const getUserAuthDataTC = () => {
+    return (dispatch: Dispatch) => {
+        userAPI.getUserAuthData()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setUserAuthData(data.data))
+                }
+            })
+    }
 }

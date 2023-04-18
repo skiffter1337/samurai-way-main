@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {userAPI} from "../../api/api";
 
 
 export type allProfileType = {
@@ -101,3 +103,11 @@ export const setUserProfile = (profile: ProfileType) => {
     } as const
 }
 
+export const getUserProfile = (userId: string) => {
+  return (dispatch: Dispatch) => {
+      userAPI.getUserProfile(userId)
+          .then(data => {
+              dispatch(setUserProfile(data))
+          })
+  }
+}
