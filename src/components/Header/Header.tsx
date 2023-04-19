@@ -11,12 +11,12 @@ const Header = (props: HeaderType) => {
     return (
         <header className={s.header}>
             <div className={s.headerBlock}>
-            <img src="eggplant.png"/>
-            <div className={s.loginBlock}>
-                {props.isAuth ? props.login:
-                <NavLink to={"/login"}>Login</NavLink>
-                }
-            </div>
+                <img src="eggplant.png"/>
+                <div className={s.loginBlock}>
+                    {props.isAuth
+                            ? <NavLink to={"/profile"}>{props.login}</NavLink>
+                            : <NavLink to={"/login"}>Login</NavLink>}
+                </div>
             </div>
         </header>
     )

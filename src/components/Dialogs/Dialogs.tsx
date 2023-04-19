@@ -4,14 +4,17 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 
 import {DialogsPageType} from "../../redux/reducers/DialogsReducer";
+import {Redirect} from "react-router-dom";
 
 export type DialogsPropsType = {
     dialogsPage: DialogsPageType
     addMessage: ()=> void
     updateNewMessage: (newMessage: string)=> void
+    isAuth: boolean
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
+
     let dialogsElement = props.dialogsPage.dialogs.map(dialog => {
         return (
             <div className={s.friends} key={dialog.id}>
@@ -31,6 +34,10 @@ export const Dialogs = (props: DialogsPropsType) => {
     const onChangeUpdateNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newMessage = e.currentTarget.value
         props.updateNewMessage(newMessage)
+    }
+
+    if(!props.isAuth) {
+       return  <Redirect to={"/login"}/>
     }
 
 
