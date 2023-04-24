@@ -10,6 +10,9 @@
     color: white;
     text-decoration: none;
 }
+.item :hover {
+    color: #9C9990;
+}
 
 .item .active {
  color: #9C9990;
