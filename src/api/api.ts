@@ -4,7 +4,7 @@ import axios from "axios";
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
     withCredentials: true,
-    headers: {"API-KEY": "79a9049a-6c51-4301-9f88-90ab51a9c484"}
+    headers: {"API-KEY": "7f308525-caa2-4707-aff1-0ff1cd5594a0"}
 })
 
 export const userAPI = {
@@ -17,7 +17,7 @@ export const userAPI = {
     follow: (userId: number) => {
         return instance.post('follow/' + userId, {}, {
             withCredentials: true,
-            headers: {"API-KEY": "79a9049a-6c51-4301-9f88-90ab51a9c484"}
+            headers: {"API-KEY": "7f308525-caa2-4707-aff1-0ff1cd5594a0"}
         })
             .then(response => {
                 return response.data
@@ -26,7 +26,7 @@ export const userAPI = {
     unFollow: (userId: number) => {
         return instance.delete('follow/' + userId, {
             withCredentials: true,
-            headers: {"API-KEY": "79a9049a-6c51-4301-9f88-90ab51a9c484"}
+            headers: {"API-KEY": "7f308525-caa2-4707-aff1-0ff1cd5594a0"}
         })
             .then(response => {
                 return response.data
@@ -48,7 +48,12 @@ export const profileAPI = {
             })
     },
     updateStatus: (status: string) => {
-     return instance.put('profile/status/', {status: status})
+      debugger
+        return instance.put('profile/status', {status: status}, {
+                withCredentials: true,
+                headers: {"API-KEY": "7f308525-caa2-4707-aff1-0ff1cd5594a0"}
+            }
+        )
     }
 }
 export const authAPI = {

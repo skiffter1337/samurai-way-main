@@ -29,13 +29,14 @@ type ProfileContainerPropsType = RouteComponentProps<ParamsType> & ProfilePropsT
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) userId = "2"
+        if (!userId) userId = "28449"
         this.props.getUserProfile(userId)
+        debugger
         this.props.getUserStatus(userId)
     }
 
-    render() {
 
+    render() {
         return (
             <Profile {...this.props.profile} profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatus}/>
         );
