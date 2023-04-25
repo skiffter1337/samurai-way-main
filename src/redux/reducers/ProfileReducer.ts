@@ -7,6 +7,7 @@ export type allProfileType = {
     profile: ProfileType
     posts: PostsDataType[]
     newPostText: string
+    status: string
 }
 
 export type ProfileType = {
@@ -51,13 +52,16 @@ let initialState: allProfileType = {
         {id: v1(), message: "It's my first post!", likesCount: 20}
 
     ],
-    newPostText: ""
+    newPostText: "",
+    status: ""
 }
 
 type AddPostActionType = ReturnType<typeof addPost>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostText>
-export type ProfileActionsType = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileType
+type SetUserStatusType = ReturnType<typeof setUserStatus>
+type UpdateStatusType = ReturnType<typeof updateStatus>
+export type ProfileActionsType = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileType | SetUserStatusType | UpdateStatusType
 
 export const profileReducer = (state = initialState, action: ProfileActionsType): allProfileType => {
     switch (action.type) {
@@ -70,13 +74,17 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
             return {...state, posts: [newPost, ...state.posts], newPostText: ""}
         case "UPDATE-NEW-POST-TEXT":
             return {...state, newPostText: action.payload.newText}
+        case "SET-USER-PROFILE": {
+            return {...state, profile: action.payload.profile}
+        }
+        case "SET-USER-STATUS": {
+            return  {...state, status: action.payload.status}
+        }
+        case "UPDATE-STATUS": {
+            return  {...state, status: action.payload.status}
+        }
         default:
             return state
-        case "SET-USER-PROFILE": {
-
-            return {...state, profile: action.payload.profile}
-
-        }
     }
 }
 
@@ -102,6 +110,25 @@ export const setUserProfile = (profile: ProfileType) => {
         }
     } as const
 }
+export const setUserStatus = (status: string) => {
+    return {
+        type: "SET-USER-STATUS",
+        payload: {
+            status: status
+        }
+    } as const
+}
+
+
+export const updateStatus = (status: string) => {
+    return {
+        type: "UPDATE-STATUS",
+        payload: {
+            status: status
+        }
+    } as const
+}
+
 
 export const getUserProfile = (userId: string) => {
   return (dispatch: Dispatch) => {
@@ -111,3 +138,24 @@ export const getUserProfile = (userId: string) => {
           })
   }
 }
+
+export const getUserStatus = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getStatus(userId)
+            .then(response => {
+                dispatch(setUserStatus(response))
+            })
+    }
+}
+
+export const updateUserStatus = (status: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.updateStatus(status)
+            .then(response => {
+                if(response.data.resultCode === 0) {
+                dispatch(updateStatus(status))
+                }
+            })
+    }
+}
+

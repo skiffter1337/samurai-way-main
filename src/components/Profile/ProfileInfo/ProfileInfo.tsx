@@ -5,16 +5,24 @@ import profilePic from './../../../assets/images/profile-anonymous2.png'
 import {Preloader} from "../../common/Preloader/Preloader";
 import {EditableSpan} from "./ProfileStatus/EditableSpan";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
+import {profileAPI} from "../../../api/api";
 
 type ProfileInfoComponentType = {
     profile: ProfileType
+    status: string
+    updateUserStatus: (status: string) => void
 }
 
 
 export const ProfileInfo = (props: ProfileInfoComponentType) => {
+
+
+
+
     if (!props.profile.photos) {
         return <Preloader/>
     }
+
     return (
         <div>
             <div>
@@ -25,7 +33,7 @@ export const ProfileInfo = (props: ProfileInfoComponentType) => {
                 <img className={s.profilePic} src={props.profile.photos ? props.profile.photos.small : profilePic}/>
                 <div>
                     <div><span>{props.profile.fullName}</span></div>
-                    <ProfileStatus status={"status"}/>
+                    <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
                     <div><span>{props.profile.aboutMe}</span></div>
                 </div>
                 <br/>
