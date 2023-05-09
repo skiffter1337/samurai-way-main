@@ -3,7 +3,6 @@ import {
     addMessageAC,
     DialogsActionsType,
     DialogsPageType,
-    updateNewMessageTextAC
 } from "../../redux/reducers/DialogsReducer";
 import {Dialogs} from "./Dialogs";
 
@@ -13,12 +12,15 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 
+
 type MapStateToPropsType = {
     dialogsPage: DialogsPageType
+    isAuth: boolean
+
 }
 type MapDispatchToPropsType = {
-    addMessage: () => void
-    updateNewMessage: (newMessage: string) => void
+    addMessage: (message: string) => void
+
 }
 
 type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -28,15 +30,13 @@ type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 let mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 let mapDispatchToProps = (dispatch: (action: DialogsActionsType) => void): MapDispatchToPropsType => {
     return {
-        addMessage: () => {
-            dispatch(addMessageAC())
-        },
-        updateNewMessage: (newMessage: string) => {
-            dispatch(updateNewMessageTextAC(newMessage))
+        addMessage: (message: string) => {
+            dispatch(addMessageAC(message))
         }
 
     }

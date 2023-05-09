@@ -3,7 +3,6 @@ import {v1} from "uuid";
 export type DialogsPageType = {
     dialogs: DialogDataType[]
     messages: MessageType[]
-    newMessageText: string
 }
 export type DialogDataType = {
     id: string
@@ -32,21 +31,19 @@ let initialState: DialogsPageType = {
         {id: v1(), message: "Hi"},
         {id: v1(), message: "Bye"}
     ],
-    newMessageText: ""
 }
 
-type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
+
 type AddMessageActionType = ReturnType<typeof addMessageAC>
-export type DialogsActionsType = AddMessageActionType | UpdateNewMessageTextActionType
+export type DialogsActionsType = AddMessageActionType
 
 
 export const dialogsReducer = (state = initialState, action: DialogsActionsType): DialogsPageType => {
     switch (action.type) {
         case "ADD-MESSAGE":
-            let newMessage: MessageType = {id: v1(), message: state.newMessageText}
-            return {...state, messages: [...state.messages, newMessage], newMessageText: ""}
-        case "UPDATE-NEW-MESSAGE-TEXT":
-            return {...state, newMessageText: action.payload.newMessage}
+            let newMessage: MessageType = {id: v1(), message: action.message}
+            return {...state, messages: [...state.messages, newMessage]}
+
         default:
             return state
     }
@@ -54,16 +51,9 @@ export const dialogsReducer = (state = initialState, action: DialogsActionsType)
 
 
 
-export const addMessageAC = () => {
+export const addMessageAC = (message: string) => {
     return {
-        type: "ADD-MESSAGE"
-    } as const
-}
-export const updateNewMessageTextAC = (newMessage: string) => {
-    return {
-        type: "UPDATE-NEW-MESSAGE-TEXT",
-        payload: {
-            newMessage: newMessage
-        }
+        type: "ADD-MESSAGE",
+        message
     } as const
 }

@@ -6,7 +6,6 @@ import {profileAPI} from "../../api/api";
 export type allProfileType = {
     profile: ProfileType
     posts: PostsDataType[]
-    newPostText: string
     status: string
 }
 
@@ -52,7 +51,6 @@ let initialState: allProfileType = {
         {id: v1(), message: "It's my first post!", likesCount: 20}
 
     ],
-    newPostText: "",
     status: ""
 }
 
@@ -68,12 +66,10 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
         case "ADD-POST":
             let newPost: PostsDataType = {
                 id: v1(),
-                message: state.newPostText,
+                message: action.postText,
                 likesCount: 0
             }
-            return {...state, posts: [newPost, ...state.posts], newPostText: ""}
-        case "UPDATE-NEW-POST-TEXT":
-            return {...state, newPostText: action.payload.newText}
+            return {...state, posts: [newPost, ...state.posts]}
         case "SET-USER-PROFILE": {
             return {...state, profile: action.payload.profile}
         }
@@ -88,9 +84,10 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
     }
 }
 
-export const addPost = () => {
+export const addPost = (postText: string) => {
     return {
-        type: "ADD-POST"
+        type: "ADD-POST",
+        postText
     } as const
 }
 export const updateNewPostText = (newText: string) => {
