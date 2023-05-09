@@ -26,30 +26,20 @@ type SetUserAuthDataType = ReturnType<typeof setUserAuthData>
 type AuthActionsType = SetUserAuthDataType
 export const authReducer = (state: initialStateType = initialState, action: AuthActionsType): initialStateType => {
     switch (action.type) {
-        case "SET-USER-AUTH-DATA": {
-            return {
-                ...state,
-                ...action.data,
-                isAuth: true
-            }
-        }
+        case "SET-USER-AUTH-DATA":
+            return {...state, ...action.data, isAuth: true}
         default:
             return state
     }
 }
 
 
-export const setUserAuthData = (data: UserDataType) => {
-    return {
-        type: "SET-USER-AUTH-DATA",
-        data
+export const setUserAuthData = (data: UserDataType) =>  ({type: "SET-USER-AUTH-DATA", data} as const)
 
-    } as const
-}
 
-export const getUserAuthDataTC = () =>  (dispatch: Dispatch) => {
-        authAPI.me()
-            .then(data => {
-                if (data.resultCode === 0) dispatch(setUserAuthData(data.data))
-            })
+export const getUserAuthDataTC = () => (dispatch: Dispatch) => {
+    authAPI.me()
+        .then(data => {
+            if (data.resultCode === 0) dispatch(setUserAuthData(data.data))
+        })
 }

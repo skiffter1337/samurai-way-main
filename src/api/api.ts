@@ -9,25 +9,19 @@ const instance = axios.create({
 
 export const userAPI = {
     getUsers: (currentPage: number, pageSize: number) => {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`, {withCredentials: true})
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data
             })
     },
     follow: (userId: number) => {
-        return instance.post('follow/' + userId, {}, {
-            withCredentials: true,
-            headers: {"API-KEY": "7f308525-caa2-4707-aff1-0ff1cd5594a0"}
-        })
+        return instance.post('follow/' + userId)
             .then(response => {
                 return response.data
             })
     },
     unFollow: (userId: number) => {
-        return instance.delete('follow/' + userId, {
-            withCredentials: true,
-            headers: {"API-KEY": "7f308525-caa2-4707-aff1-0ff1cd5594a0"}
-        })
+        return instance.delete('follow/' + userId)
             .then(response => {
                 return response.data
             })
@@ -48,12 +42,7 @@ export const profileAPI = {
             })
     },
     updateStatus: (status: string) => {
-      debugger
-        return instance.put('profile/status', {status: status}, {
-                withCredentials: true,
-                headers: {"API-KEY": "7f308525-caa2-4707-aff1-0ff1cd5594a0"}
-            }
-        )
+        return instance.put('profile/status', {status: status})
     }
 }
 export const authAPI = {

@@ -140,12 +140,9 @@ export const getUserProfile = (userId: string) => {
 }
 
 export const getUserStatus = (userId: string) => {
-    debugger
     return (dispatch: Dispatch) => {
-        debugger
         profileAPI.getStatus(userId)
             .then(response => {
-                debugger
                 dispatch(setUserStatus(response))
             })
     }
@@ -153,10 +150,8 @@ export const getUserStatus = (userId: string) => {
 
 export const updateUserStatus = (status: string) => {
     return (dispatch: Dispatch) => {
-        debugger
         profileAPI.updateStatus(status)
             .then(response => {
-                debugger
                 if(response.data.resultCode === 0) {
                 dispatch(updateStatus(status))
                 }

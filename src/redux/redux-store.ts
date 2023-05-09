@@ -4,6 +4,7 @@ import {dialogsReducer} from "./reducers/DialogsReducer";
 import {usersReducer} from "./reducers/UsersReducer";
 import {authReducer} from "./reducers/authReducer";
 import thunk from "redux-thunk";
+import {reducer as formReducer} from 'redux-form';
 
 
 
@@ -12,6 +13,7 @@ let reducers = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    form: formReducer
     // sidebar: sideBarReducer,
 })
 export type AppStoreType = ReturnType<typeof reducers>

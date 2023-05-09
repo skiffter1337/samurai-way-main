@@ -30,7 +30,6 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
         this.props.updateUserStatus(this.state.status)
     }
     onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        debugger
         this.setState({
             status: e.currentTarget.value
         })
@@ -39,7 +38,7 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
     componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<StateType>) {
         if (prevProps.status !== this.props.status) {
             this.setState({
-                status: this.props.status,
+                status: this.props.status
             })
         }
     }
