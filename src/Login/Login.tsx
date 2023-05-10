@@ -2,6 +2,8 @@ import React from 'react';
 import s from './Login.module.css'
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {authAPI} from "../api/api";
+import {Input} from "../components/common/FormsComtrols/FormsControls";
+import {required} from "../utils/validators";
 
 type FormDataType = {
     login: string
@@ -13,7 +15,7 @@ type FormDataType = {
 export const Login = (): JSX.Element => {
 
     const onSubmit = (formData: FormDataType) => {
-        authAPI.login(formData.login, formData.password)
+        console.log(formData)
     }
     return (
         <div className={s.login}>
@@ -32,23 +34,27 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
             <div>
                 <Field
                     name={"login"}
-                    component="input"
+                    type={"email"}
+                    component={Input}
                     placeholder={"login"}
-                    required/>
+                    validate={[required]}
+                />
             </div>
             <div>
                 <Field
                     name={"password"}
-                    component="input"
                     type={"password"}
+                    component={Input}
                     placeholder={"password"}
-                    required/>
+                    validate={[required]}
+                    />
             </div>
             <div>
                 <Field
                     name={"remember"}
                     type={"checkbox"}
-                    component="input"/>
+                    component={Input}
+                />
                 remember me
             </div>
             <div>
