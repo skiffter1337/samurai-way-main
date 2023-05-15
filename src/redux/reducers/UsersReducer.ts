@@ -35,7 +35,7 @@ let initialState = {
 }
 
 
-export const usersReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: UsersActionType): InitialStateType => {
     switch (action.type) {
         case "FOLLOW": {
             return {...state, items: state.items.map(u => u.id === action.payload.id ? {...u, followed: true} : u)}
@@ -67,7 +67,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
     }
 }
 
-type ActionType = FollowACType
+export type UsersActionType = FollowACType
     | UnfollowACType |
     SetUsersACType |
     ChangeCurrentPageACType |
