@@ -14,6 +14,8 @@ import {profileAPI} from "../../api/api";
 type MapStateToPropsType = {
     profile: ProfileType
     status: string
+    autorizedUserID: number | null
+    isAuth: boolean
 }
 type MapDispatchToPropsType = {
     getUserProfile: (userId: string) => void
@@ -29,7 +31,12 @@ type ProfileContainerPropsType = RouteComponentProps<ParamsType> & ProfilePropsT
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) userId = "28449"
+        if (!userId) {
+            userId = "" + this.props.autorizedUserID
+            if(!userId) {
+                this.props.history.push('/login')
+            }
+        }
         this.props.getUserProfile(userId)
         this.props.getUserStatus(userId)
     }
@@ -44,7 +51,9 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
 const mapStateToProps = (state: AppStoreType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    autorizedUserID: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 
 

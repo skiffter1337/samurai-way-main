@@ -8,7 +8,6 @@ import {getUserAuthDataTC, logoutTC} from "../../redux/reducers/authReducer";
 
 
 type MapDispatchToPropsType = {
-    getUserAuthDataTC: () => void
     logoutTC: () => void
 }
 
@@ -21,9 +20,6 @@ type HeaderContainerType = MapDispatchToPropsType & MapStateToPropsType
 
 class HeaderContainer extends React.Component<HeaderContainerType> {
 
-    componentDidMount() {
-        this.props.getUserAuthDataTC()
-    }
 
 
     render() {
@@ -42,4 +38,4 @@ const mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
 }
 
 
-export default connect(mapStateToProps, {getUserAuthDataTC, logoutTC})(HeaderContainer)
+export default connect(mapStateToProps, {logoutTC})(HeaderContainer)

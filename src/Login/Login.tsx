@@ -72,6 +72,9 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 />
                 remember me
             </div>
+            <div className={s.summary_error}>
+                {props.error}
+            </div>
             <div>
                 <button>submit</button>
             </div>
@@ -80,6 +83,6 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     );
 };
 
-const ReduxLoginForm = reduxForm<FormDataType>({
+export const ReduxLoginForm = reduxForm<FormDataType>({
     form: 'login'
 })(LoginForm)

@@ -11,32 +11,58 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import Login from "./Login/Login";
+import {connect} from "react-redux";
+import {initializeAppTC} from "./redux/reducers/appReducer";
+import {AppStoreType} from "./redux/redux-store";
+import {Preloader} from "./components/common/Preloader/Preloader";
 
+type MapStateToPropsType = {
+    initialized: boolean
+}
 
-
-
-
-const App = () => {
-    return (
-        <div className="app-wrapper">
-            <HeaderContainer/>
-            <Navbar/>
-            <div className="app-wrapper-content">
-                    <Route path="/dialogs" render={ () => <DialogsContainer/>}/>
-                    <Route path="/profile/:userId?" render={ () =><ProfileContainer/>}/>
-                    <Route path="/users" render={ () =><UsersContainer/>}/>
-                    <Route path="/login" render={ () =><Login/>}/>
-                    <Route path="/news" render={ () =>News}/>
-                    <Route path="/music" render={ () =>Music}/>
-                    <Route path="/settings" render={ () =>Settings}/>
-                    <Route path="/friends" render={ () =><Friends/>}/>
-                {/*<Route path="/*" render={ () =><Error404/>}/>*/}
-            </div>
-        </div>
-
-
-    );
+type MapDispatchToPropsType = {
+    initializeAppTC: () => void
 }
 
 
-export default App;
+
+class App extends React.Component<MapDispatchToPropsType & MapStateToPropsType> {
+
+
+    componentDidMount() {
+        this.props.initializeAppTC()
+    }
+
+    render() {
+        if(!this.props.initialized) {
+            return <Preloader/>
+        } else
+        return (
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <Navbar/>
+                <div className="app-wrapper-content">
+                    <Route path="/dialogs" render={() => <DialogsContainer/>}/>
+                    <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                    <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/login" render={() => <Login/>}/>
+                    <Route path="/news" render={() => News}/>
+                    <Route path="/music" render={() => Music}/>
+                    <Route path="/settings" render={() => Settings}/>
+                    <Route path="/friends" render={() => <Friends/>}/>
+                    {/*<Route path="/*" render={ () =><Error404/>}/>*/}
+                </div>
+            </div>
+
+
+        );
+    }
+}
+
+const mapStateToProps = (state: AppStoreType): MapStateToPropsType  => {
+    return  {
+        initialized: state.app.initialized
+    }
+}
+
+export default connect(mapStateToProps, {initializeAppTC})(App);
