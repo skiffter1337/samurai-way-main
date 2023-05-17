@@ -10,8 +10,13 @@ import {
 import {AppStoreType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from "../common/Preloader/Preloader";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPageFromState, getFollowingInProgressFromState, getIsFetchingFromState,
+    getPageSizeFromState,
+    getTotalCountFromState,
+    getUsersFromState
+} from "../../redux/reducers/UsersSelector";
 
 
 type MapStateToPropsType = {
@@ -63,12 +68,12 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
 let mapStateToProps = (state: AppStoreType): MapStateToPropsType => {
     return {
-        usersPage: state.usersPage.items,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        usersPage: getPageSizeFromState(state),
+        pageSize: getUsersFromState(state),
+        totalCount: getTotalCountFromState(state),
+        currentPage: getCurrentPageFromState(state),
+        isFetching: getIsFetchingFromState(state),
+        followingInProgress: getFollowingInProgressFromState(state)
     }
 }
 
@@ -81,5 +86,5 @@ export default compose<React.ComponentType>(connect(mapStateToProps, {
     changeCurrentPageTC,
     followTC,
     unfollowTC
-}), withAuthRedirect)(UsersContainer)
+}))(UsersContainer)
 
