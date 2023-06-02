@@ -35,9 +35,9 @@ export const Users = (props: UsersType) => {
 
     return (
         <>
-            {pages.map(p => {
+            {pages.map((p, index) => {
                 return (
-                    <span className={p === props.currentPage ? s.selected_page : ""}
+                    <span key={index} className={p === props.currentPage ? s.selected_page : ""}
                           onClick={() => props.changeCurrentPage(p)}>{` ${p} `}</span>
                 )
             })}

@@ -6,6 +6,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {EditableSpan} from "./ProfileStatus/EditableSpan";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
 import {profileAPI} from "../../../api/api";
+import {ProfileStatusHooks} from "./ProfileStatus/ProfileStatusHooks";
 
 type ProfileInfoComponentType = {
     profile: ProfileType
@@ -33,7 +34,8 @@ export const ProfileInfo = (props: ProfileInfoComponentType) => {
                 <img className={s.profilePic} src={props.profile.photos ? props.profile.photos.small : profilePic}/>
                 <div>
                     <div><span>{props.profile.fullName}</span></div>
-                    <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
+                    {/*<ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>*/}
+                    <ProfileStatusHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
                     <div><span>{props.profile.aboutMe}</span></div>
                 </div>
                 <br/>
