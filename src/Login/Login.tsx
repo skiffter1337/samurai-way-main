@@ -41,11 +41,11 @@ loginTC: (email: string, password: string, rememberMe: boolean) => void
 const mapStateToProps = (state: AppStoreType) => ({isAuth: state.auth.isAuth})
 
 export default connect(mapStateToProps, {loginTC}) (Login);
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
 
 
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field
                     name={"email"}
@@ -73,7 +73,7 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 remember me
             </div>
             <div className={s.summary_error}>
-                {props.error}
+                {error}
             </div>
             <div>
                 <button>submit</button>

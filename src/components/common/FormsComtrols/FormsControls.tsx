@@ -30,16 +30,16 @@ type MetaType = {
 
 
 const FormControl = (props: TextAreaType) => {
-    const {input, meta, ...restProps} = props
+    const {input, meta: {touched, error}, ...restProps} = props
 
-    const hasError = meta.touched && meta.error
+    const hasError = touched && error
 
     return (
         <div className={`${s.formControl} ${hasError ? s.error : ""}`}>
             <div>
                 {props.children}
             </div>
-            {hasError && <span>{meta.error}</span>}
+            {hasError && <span>{error}</span>}
         </div>
     );
 };
