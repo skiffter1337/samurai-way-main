@@ -42,7 +42,6 @@ export type PostsDataType = {
 }
 
 
-
 let initialState: allProfileType = {
     profile: {} as ProfileType,
     posts: [
@@ -54,30 +53,41 @@ let initialState: allProfileType = {
     status: ""
 }
 
+type DeletePostType = ReturnType<typeof deletePost>
 type AddPostActionType = ReturnType<typeof addPost>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostText>
 type SetUserStatusType = ReturnType<typeof setUserStatus>
 type UpdateStatusType = ReturnType<typeof updateStatus>
-export type ProfileActionsType = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileType | SetUserStatusType | UpdateStatusType
+export type ProfileActionsType =
+    AddPostActionType
+    | UpdateNewPostTextActionType
+    | SetUserProfileType
+    | SetUserStatusType
+    | UpdateStatusType
+    | DeletePostType
 
 export const profileReducer = (state = initialState, action: ProfileActionsType): allProfileType => {
     switch (action.type) {
-        case "ADD-POST":
+        case "ADD-POST": {
             let newPost: PostsDataType = {
                 id: v1(),
                 message: action.postText,
                 likesCount: 0
             }
             return {...state, posts: [newPost, ...state.posts]}
+        }
+        case "DELETE-POST": {
+            return {...state, posts: state.posts.filter(el => el.id !== action.id)}
+        }
         case "SET-USER-PROFILE": {
             return {...state, profile: action.payload.profile}
         }
         case "SET-USER-STATUS": {
-            return  {...state, status: action.payload.status}
+            return {...state, status: action.payload.status}
         }
         case "UPDATE-STATUS": {
-            return  {...state, status: action.payload.status}
+            return {...state, status: action.payload.status}
         }
         default:
             return state
@@ -88,6 +98,12 @@ export const addPost = (postText: string) => {
     return {
         type: "ADD-POST",
         postText
+    } as const
+}
+export const deletePost = (id: string) => {
+    return {
+        type: "DELETE-POST",
+        id
     } as const
 }
 export const updateNewPostText = (newText: string) => {
@@ -128,12 +144,12 @@ export const updateStatus = (status: string) => {
 
 
 export const getUserProfile = (userId: string) => {
-  return (dispatch: Dispatch) => {
-      profileAPI.getUser(userId)
-          .then(data => {
-              dispatch(setUserProfile(data))
-          })
-  }
+    return (dispatch: Dispatch) => {
+        profileAPI.getUser(userId)
+            .then(data => {
+                dispatch(setUserProfile(data))
+            })
+    }
 }
 
 export const getUserStatus = (userId: string) => {
@@ -149,8 +165,8 @@ export const updateUserStatus = (status: string) => {
     return (dispatch: Dispatch) => {
         profileAPI.updateStatus(status)
             .then(response => {
-                if(response.data.resultCode === 0) {
-                dispatch(updateStatus(status))
+                if (response.data.resultCode === 0) {
+                    dispatch(updateStatus(status))
                 }
             })
     }

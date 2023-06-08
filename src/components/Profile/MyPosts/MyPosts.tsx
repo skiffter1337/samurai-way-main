@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {PostsDataType} from "../../../redux/reducers/ProfileReducer";
@@ -11,14 +11,19 @@ import {TextArea} from "../../common/FormsComtrols/FormsControls";
 type MyPostsPropsType = {
     posts: PostsDataType[]
     addPost: (postText: string) => void
+    deletePost: (id: string) => void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
+    console.log("myposts rendered")
+
     let postsElement = props.posts.map(post =>
         <Post
             key={post.id}
+            id={post.id}
             message={post.message}
             likesCount={post.likesCount}
+            deletePost={props.deletePost}
         />)
 
 

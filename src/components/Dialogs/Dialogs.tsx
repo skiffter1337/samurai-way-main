@@ -31,7 +31,7 @@ export const Dialogs = (props: DialogsPropsType) => {
 
     const onClickAddNewMessage = (values: SendMessageFormDataType) => {
         props.addMessage(values.message)
-        values.resetForm()
+
 
     }
 
