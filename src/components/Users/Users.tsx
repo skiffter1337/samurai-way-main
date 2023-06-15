@@ -5,7 +5,7 @@ import {User} from "./User";
 
 
 type UsersType = {
-    totalCount: number
+    totalItemsCount: number
     currentPage: number
     usersPage: UserType[]
     pageSize: number
@@ -26,7 +26,7 @@ export const Users: React.FC<UsersType> =
          changeCurrentPage,
          usersPage,
          pageSize,
-         totalCount,
+         totalItemsCount,
          followTC,
          unfollowTC,
          unfollow,
@@ -35,8 +35,8 @@ export const Users: React.FC<UsersType> =
 
         return (
             <>
-                <Paginator currentPage={currentPage} changeCurrentPage={changeCurrentPage} totalCount={totalCount}
-                           pageSize={pageSize}/>
+                <Paginator currentPage={currentPage} changeCurrentPage={changeCurrentPage} totalItemsCount={totalItemsCount}
+                           portionSize={pageSize}/>
                 {
                     usersPage.map(user =>
                         <User

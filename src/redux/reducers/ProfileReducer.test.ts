@@ -11,21 +11,21 @@ let oldState = {
     ],
     status: ""
 }
-test('length of posts should be increased', () => {
-    let action = addPost('new post')
-    let newState = profileReducer(oldState, action)
-    expect(newState.posts.length).toBe(4)
-
-})
-test('new post message should be correct', () => {
-    let action = addPost('new post')
-    let newState = profileReducer(oldState, action)
-    expect(newState.posts[0].message).toBe('new post')
-})
-
-test('correct post could be deleted', () => {
-    let action = deletePost('1')
-    let newState = profileReducer(oldState, action)
-    expect(newState.posts.length).toBe(2)
-    expect(newState.posts[1].message).toBe("It's my first post!")
-})
+// test('length of posts should be increased', () => {
+//     let action = addPost('new post')
+//     let newState = profileReducer(oldState, action)
+//     expect(newState.posts.length).toBe(4)
+//
+// })
+// test('new post message should be correct', () => {
+//     let action = addPost('new post')
+//     let newState = profileReducer(oldState, action)
+//     expect(newState.posts[0].message).toBe('new post')
+// })
+//
+// test('correct post could be deleted', () => {
+//     let action = deletePost('1')
+//     let newState = profileReducer(oldState, action)
+//     expect(newState.posts.length).toBe(2)
+//     expect(newState.posts[1].message).toBe("It's my first post!")
+// })

@@ -14,8 +14,7 @@ import {compose} from "redux";
 import {
     getCurrentPageFromState, getFollowingInProgressFromState, getIsFetchingFromState,
     getPageSizeFromState,
-    getTotalCountFromState,
-    getUsersFromState, getUsersSelector
+    getTotalCountFromState, getUsersSelector
 } from "../../redux/reducers/UsersSelector";
 
 
@@ -53,7 +52,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
             <Users
                 changeCurrentPage={this.changeCurrentPageHandler}
                 pageSize={this.props.pageSize}
-                totalCount={this.props.totalCount}
+                totalItemsCount={this.props.totalCount}
                 currentPage={this.props.currentPage}
                 usersPage={this.props.usersPage}
                 follow={this.props.follow}
