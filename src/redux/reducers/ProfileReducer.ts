@@ -1,7 +1,6 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileAPI} from "../../api/api";
-import {PhotosType} from "./UsersReducer";
 
 
 export type allProfileType = {
