@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileAPI} from "../../api/api";
+import {PhotosType} from "./UsersReducer";
 
 
 export type allProfileType = {
@@ -59,6 +60,7 @@ type SetUserProfileType = ReturnType<typeof setUserProfile>
 type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostText>
 type SetUserStatusType = ReturnType<typeof setUserStatus>
 type UpdateStatusType = ReturnType<typeof updateStatus>
+type ChangePhotoSuccessType = ReturnType<typeof changePhotoSuccess>
 export type ProfileActionsType =
     AddPostActionType
     | UpdateNewPostTextActionType
@@ -66,6 +68,8 @@ export type ProfileActionsType =
     | SetUserStatusType
     | UpdateStatusType
     | DeletePostType
+    | ChangePhotoSuccessType
+
 
 export const profileReducer = (state = initialState, action: ProfileActionsType): allProfileType => {
     switch (action.type) {
@@ -88,6 +92,11 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
         }
         case "UPDATE-STATUS": {
             return {...state, status: action.payload.status}
+        }
+        case "CHANGE-PHOTO": {
+            debugger
+            return  {...state, profile: {...state.profile, photos: action.payload.photos}}
+            debugger
         }
         default:
             return state
@@ -142,7 +151,14 @@ export const updateStatus = (status: string) => {
     } as const
 }
 
-
+export const changePhotoSuccess = (photos: ProfilePhotosType) => {
+    return {
+        type: "CHANGE-PHOTO",
+        payload: {
+            photos
+        }
+    } as const
+}
 export const getUserProfile = (userId: string) => async (dispatch: Dispatch) => {
     const res = await profileAPI.getUser(userId)
     dispatch(setUserProfile(res))
@@ -158,3 +174,10 @@ export const updateUserStatus = (status: string) => async (dispatch: Dispatch) =
     if (res.data.resultCode === 0) dispatch(updateStatus(status))
 }
 
+export const changePhoto = (file: File) => async (dispatch: Dispatch) => {
+    debugger
+    const res = await profileAPI.changePhoto(file)
+   if(res.data.resultCode === 0) {
+       dispatch(changePhotoSuccess(res.data.data.photos))
+   }
+}

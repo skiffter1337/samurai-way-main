@@ -1,8 +1,9 @@
 .img {
-    width: 500px;
+    width: 100%;
 }
 
 .profilePic {
+    max-width: 150px;
     padding: 10px;
     border-radius: 50%;
 }
