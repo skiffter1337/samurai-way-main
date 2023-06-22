@@ -1,4 +1,5 @@
 import axios from "axios";
+import {ProfileDataFormType} from "../components/Profile/ProfileInfo/ProfileData/ProfileDataForm/ProfileDataForm";
 
 
 
@@ -30,13 +31,13 @@ export const userAPI = {
 }
 
 export const profileAPI = {
-    getUser: (userId: string) => {
+    getUser: (userId: number) => {
         return instance.get('profile/' + userId)
             .then(response => {
                 return response.data
             })
     },
-    getStatus: (userId: string) => {
+    getStatus: (userId: number) => {
         return instance.get('profile/status/' + userId)
             .then(response => {
                 return response.data
@@ -53,6 +54,9 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    saveProfile: (formData: ProfileDataFormType) => {
+        return instance.put('profile', formData)
     }
 
 }

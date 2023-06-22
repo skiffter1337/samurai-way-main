@@ -1,61 +1,77 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import s from "../Profile.module.css";
-import {ProfileType} from "../../../redux/reducers/ProfileReducer";
-import profilePic from './../../../assets/images/profile-anonymous2.png'
+import {ProfileType, saveProfileTC} from "../../../redux/reducers/ProfileReducer";
 import {Preloader} from "../../common/Preloader/Preloader";
-import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
-import profile from "../Profile";
+import {ProfileData} from "./ProfileData/ProfileData";
+import profilePic from "../../../assets/images/profile-anonymous2.png";
+import {ProfileDataFormType, ReduxProfileForm} from "./ProfileData/ProfileDataForm/ProfileDataForm";
 
-type ProfileInfoComponentType = {
+type PropsType = {
     profile: ProfileType
     status: string
     updateUserStatus: (status: string) => void
     isOwner: boolean
     changePhoto: (file: File) => void
+    saveProfileTC: (formData: ProfileDataFormType) => void
 }
 
 
-export const ProfileInfo = (props: ProfileInfoComponentType) => {
+export const ProfileInfo: React.FC<PropsType> = (
+    {
+        profile,
+        changePhoto,
+        isOwner,
+        updateUserStatus,
+        status,
+        saveProfileTC
+    }) => {
 
+
+    const [editMode, setEditMode] = useState<boolean>(false)
+
+    const activateEditMode = () => setEditMode(true)
+
+    const deactivateEditMode = () => {
+
+        setEditMode(false)
+    }
     const changeProfilePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-        if(e.target.files) {
-           props.changePhoto(e.target.files[0])
+        if (e.target.files) {
+            changePhoto(e.target.files[0])
         }
 
     }
 
+    const onSubmit = (formData: ProfileDataFormType) => {
+       let pr = saveProfileTC(formData)
+        setEditMode(false)
+    }
 
-    if (!props.profile.photos) {
+    if (!profile.photos) {
         return <Preloader/>
     }
-    console.log(props.profile.photos.large)
     return (
         <div>
             <div>
                 <img className={s.img}
                      src="https://cdn.freelance.ru/img/portfolio/pics/00/38/39/3684699.jpg?mt=60e595fd"/>
-                {props.isOwner && <input type='file' onChange={changeProfilePhoto}/>}
+                {isOwner && <input type='file' onChange={changeProfilePhoto}/>}
             </div>
-            <div className={s.profile}>
-                <img className={s.profilePic} src={props.profile.photos.large || profilePic}/>
-                <div>
-                    <div><span>{props.profile.fullName}</span></div>
-                    <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
-                    <div><span>{props.profile.aboutMe}</span></div>
-                </div>
-                <br/>
-                <div>
-                    Contacts
-                    <ul>
-                        <li>FaceBook: {props.profile.contacts.facebook}</li>
-                        <li>WebSite: {props.profile.contacts.website}</li>
-                        <li>VK: {props.profile.contacts.vk}</li>
-                        <li>YT: {props.profile.contacts.youtube}</li>
-                        <li>Github: {props.profile.contacts.github}</li>
-                    </ul>
-                </div>
-            </div>
+            <img className={s.profilePic} src={profile.photos.large || profilePic}/>
+            {editMode ?
+                <ReduxProfileForm initialValues={profile} profile={profile} deactivateEditMode={deactivateEditMode}
+                                  onSubmit={onSubmit}/> :
+                <ProfileData profile={profile} updateUserStatus={updateUserStatus} status={status} isOwner={isOwner}
+                             activateEditMode={activateEditMode}/>
+            }
         </div>
     );
 };
+
+
+
+
+
+
+
 

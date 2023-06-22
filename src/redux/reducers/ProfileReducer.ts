@@ -1,6 +1,9 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileAPI} from "../../api/api";
+import {ProfileDataFormType} from "../../components/Profile/ProfileInfo/ProfileData/ProfileDataForm/ProfileDataForm";
+import {AppDispatchType, AppStoreType, AppThunk} from "../redux-store";
+import {stopSubmit} from "redux-form";
 
 
 export type allProfileType = {
@@ -19,15 +22,15 @@ export type ProfileType = {
     photos: ProfilePhotosType
 }
 
-type ProfileContactsType = {
+export type ProfileContactsType = {
     facebook: string
-    website: null
+    website: string
     vk: string
     twitter: string
     instagram: string
-    youtube: null
+    youtube: string
     github: string
-    mainLink: null
+    mainLink: string
 }
 
 export type ProfilePhotosType = {
@@ -60,6 +63,7 @@ type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostText>
 type SetUserStatusType = ReturnType<typeof setUserStatus>
 type UpdateStatusType = ReturnType<typeof updateStatus>
 type ChangePhotoSuccessType = ReturnType<typeof changePhotoSuccess>
+type SaveProfileSuccessType = ReturnType<typeof saveProfileSuccess>
 export type ProfileActionsType =
     AddPostActionType
     | UpdateNewPostTextActionType
@@ -68,6 +72,7 @@ export type ProfileActionsType =
     | UpdateStatusType
     | DeletePostType
     | ChangePhotoSuccessType
+    | SaveProfileSuccessType
 
 
 export const profileReducer = (state = initialState, action: ProfileActionsType): allProfileType => {
@@ -93,10 +98,11 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
             return {...state, status: action.payload.status}
         }
         case "CHANGE-PHOTO": {
-            debugger
-            return  {...state, profile: {...state.profile, photos: action.payload.photos}}
-            debugger
+            return {...state, profile: {...state.profile, photos: action.payload.photos}}
         }
+        // case "SAVE-PROFILE": {
+        //     return  {...state}
+        // }
         default:
             return state
     }
@@ -158,12 +164,22 @@ export const changePhotoSuccess = (photos: ProfilePhotosType) => {
         }
     } as const
 }
-export const getUserProfile = (userId: string) => async (dispatch: Dispatch) => {
-    const res = await profileAPI.getUser(userId)
-    dispatch(setUserProfile(res))
+
+export const saveProfileSuccess = (formData: ProfileDataFormType) => {
+    return {
+        type: "SAVE-PROFILE",
+        payload: {
+            formData
+        }
+    } as const
+}
+export const getUserProfile = (userId: number) =>  (dispatch: Dispatch) => {
+  profileAPI.getUser(userId)
+      .then((res) => dispatch(setUserProfile(res)))
+
 }
 
-export const getUserStatus = (userId: string) => async (dispatch: Dispatch) => {
+export const getUserStatus = (userId: number) => async (dispatch: Dispatch) => {
     const res = await profileAPI.getStatus(userId)
     dispatch(setUserStatus(res))
 }
@@ -174,9 +190,25 @@ export const updateUserStatus = (status: string) => async (dispatch: Dispatch) =
 }
 
 export const changePhoto = (file: File) => async (dispatch: Dispatch) => {
-    debugger
     const res = await profileAPI.changePhoto(file)
-   if(res.data.resultCode === 0) {
-       dispatch(changePhotoSuccess(res.data.data.photos))
-   }
+    if (res.data.resultCode === 0) {
+        dispatch(changePhotoSuccess(res.data.data.photos))
+    }
+}
+export const saveProfileTC = (formData: ProfileDataFormType) => async (dispatch: AppDispatchType, getState: () => AppStoreType) => {
+
+    const res = await profileAPI.saveProfile(formData)
+
+    if (res.data.resultCode === 0) {
+        const userId = getState().auth.id
+        if(userId) {
+           dispatch(getUserProfile(userId))
+            return Promise.resolve()
+        }
+    } else {
+        dispatch(stopSubmit('editProfile', {_error: res.data.messages[0]})) // спарсить объект и сделать выдачу ошибки для кажлого инпута
+            return Promise.reject(res.data.messages[0])
+        // {'contacts': {'socialName': res.data.messages[0]}
+    }
+    return Promise.resolve()
 }

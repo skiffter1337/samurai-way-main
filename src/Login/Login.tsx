@@ -9,7 +9,7 @@ import {Redirect} from "react-router-dom";
 import {AppStoreType} from "../redux/redux-store";
 
 
-type FormDataType = {
+type LoginFormDataType = {
     email: string
     password: string
     remember: boolean
@@ -22,7 +22,7 @@ loginTC: (email: string, password: string, rememberMe: boolean) => void
  const Login = (props: LoginType): JSX.Element => {
 
 
-    const onSubmit = (formData: FormDataType) => {
+    const onSubmit = (formData: LoginFormDataType) => {
         props.loginTC(formData.email, formData.password, formData.remember)
     }
 
@@ -41,7 +41,7 @@ loginTC: (email: string, password: string, rememberMe: boolean) => void
 const mapStateToProps = (state: AppStoreType) => ({isAuth: state.auth.isAuth})
 
 export default connect(mapStateToProps, {loginTC}) (Login);
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+export const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = ({handleSubmit, error}) => {
 
 
     return (
@@ -83,6 +83,6 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubm
     );
 };
 
-export const ReduxLoginForm = reduxForm<FormDataType>({
+export const ReduxLoginForm = reduxForm<LoginFormDataType>({
     form: 'login'
 })(LoginForm)

@@ -48,5 +48,8 @@ export const TextArea = (props: TextAreaType) =><FormControl {...props}>{<textar
 
 
 export const Input = (props: TextAreaType) => <FormControl {...props}>{<input {...props.input} {...props}/>}</FormControl>
+export const CheckBox = (props: TextAreaType) => <FormControl {...props}>{<input type='checkbox' {...props.input} {...props}/>}</FormControl>
+
+
 
 

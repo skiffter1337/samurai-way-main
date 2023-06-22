@@ -15,7 +15,7 @@ type MyPostsPropsType = {
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
-    console.log("myposts rendered")
+
 
     let postsElement = props.posts.map(post =>
         <Post

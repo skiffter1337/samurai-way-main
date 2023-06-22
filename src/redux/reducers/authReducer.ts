@@ -32,12 +32,12 @@ export type AuthActionsType = SetUserAuthDataType
 export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
         case "auth/SET-USER-AUTH-DATA":
-
             return {...state, ...action.data, isAuth: action.isAuth}
         default:
             return state
     }
 }
+
 
 
 export const setUserAuthData = (data: UserDataType, isAuth: boolean) => ({

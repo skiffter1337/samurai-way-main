@@ -1,7 +1,8 @@
 import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../redux/reducers/ProfileReducer";
+import {ProfileType, saveProfileTC} from "../../redux/reducers/ProfileReducer";
+import {ProfileDataFormType} from "./ProfileInfo/ProfileData/ProfileDataForm/ProfileDataForm";
 
 
 
@@ -12,6 +13,7 @@ type ProfileComponentType = {
     updateUserStatus: (status: string) => void
     isOwner: boolean
     changePhoto: (file: File) => void
+    saveProfileTC: (formData: ProfileDataFormType) => void
 }
 
 
@@ -24,7 +26,9 @@ const Profile = (props: ProfileComponentType) => {
                 status={props.status}
                 updateUserStatus={props.updateUserStatus }
                 isOwner={props.isOwner}
-                changePhoto={props.changePhoto}/>
+                changePhoto={props.changePhoto}
+                saveProfileTC={props.saveProfileTC}
+            />
             <MyPostsContainer/>
         </div>
     );
