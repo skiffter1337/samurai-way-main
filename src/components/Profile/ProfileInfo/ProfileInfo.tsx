@@ -5,6 +5,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileData} from "./ProfileData/ProfileData";
 import profilePic from "../../../assets/images/profile-anonymous2.png";
 import {ProfileDataFormType, ReduxProfileForm} from "./ProfileData/ProfileDataForm/ProfileDataForm";
+import {useDispatch} from "react-redux";
 
 type PropsType = {
     profile: ProfileType
@@ -12,7 +13,7 @@ type PropsType = {
     updateUserStatus: (status: string) => void
     isOwner: boolean
     changePhoto: (file: File) => void
-    saveProfileTC: (formData: ProfileDataFormType) => void
+    saveProfileTC: (formData: ProfileDataFormType) => Promise<void>
 }
 
 
@@ -25,6 +26,7 @@ export const ProfileInfo: React.FC<PropsType> = (
         status,
         saveProfileTC
     }) => {
+
 
 
     const [editMode, setEditMode] = useState<boolean>(false)
@@ -42,9 +44,13 @@ export const ProfileInfo: React.FC<PropsType> = (
 
     }
 
+
     const onSubmit = (formData: ProfileDataFormType) => {
-       let pr = saveProfileTC(formData)
-        setEditMode(false)
+
+        saveProfileTC(formData)
+            .then(() => {
+                setEditMode(false)
+            })
     }
 
     if (!profile.photos) {

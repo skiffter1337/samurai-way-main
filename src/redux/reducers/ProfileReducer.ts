@@ -201,14 +201,16 @@ export const saveProfileTC = (formData: ProfileDataFormType) => async (dispatch:
 
     if (res.data.resultCode === 0) {
         const userId = getState().auth.id
-        if(userId) {
-           dispatch(getUserProfile(userId))
-            return Promise.resolve()
+        if (userId) {
+            dispatch(getUserProfile(userId))
         }
     } else {
-        dispatch(stopSubmit('editProfile', {_error: res.data.messages[0]})) // спарсить объект и сделать выдачу ошибки для кажлого инпута
-            return Promise.reject(res.data.messages[0])
-        // {'contacts': {'socialName': res.data.messages[0]}
+        const arrowIndex = res.data.messages[0].indexOf('->');
+
+            dispatch(stopSubmit('editProfile', {'contacts': {[res.data.messages[0].substring(arrowIndex + 2, res.data.messages[0].length - 1).toLowerCase()]: res.data.messages[0]}}));
+            return Promise.reject(res.data.messages[0]);
+
     }
-    return Promise.resolve()
 }
+
+

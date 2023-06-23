@@ -13,7 +13,7 @@ type ProfileComponentType = {
     updateUserStatus: (status: string) => void
     isOwner: boolean
     changePhoto: (file: File) => void
-    saveProfileTC: (formData: ProfileDataFormType) => void
+    saveProfileTC: (formData: ProfileDataFormType) => Promise<void>
 }
 
 
